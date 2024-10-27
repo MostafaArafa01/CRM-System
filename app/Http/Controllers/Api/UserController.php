@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         try{
-            if(!Gate::allows('is-admin')) abort(403);
+            if(!Gate::allows('is-admin')) return response()->json(['error' => 'Forbidden'], 403);
             return User::paginate(20);
         }
         catch(Exception $e){

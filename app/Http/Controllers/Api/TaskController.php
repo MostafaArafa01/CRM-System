@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Mail\TaskAlert;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Exception;
@@ -29,8 +30,7 @@ class TaskController extends Controller
     {
         try{
             $task = Task::create($request->validated());
-            $user = User::where($request->user_id)->first();
-            Mail::to($user)->send(new TaskAlert());
+            Mail::to(Auth()->user()->email)->send(new TaskAlert());
         }
         catch(Exception $e){
             return $e->getMessage();

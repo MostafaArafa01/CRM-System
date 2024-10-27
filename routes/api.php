@@ -11,8 +11,9 @@ use App\Http\Controllers\api\TaskController;
 
 
 
-Route::apiResource('/user',UserController::class)->middleware('auth:sanctum');
-Route::apiResource('/task',TaskController::class);
+Route::apiResource('/user',UserController::class)->except('store')->middleware('auth:sanctum');
+Route::apiResource('/user',UserController::class)->only('store');
+Route::apiResource('/task',TaskController::class)->middleware('auth:sanctum');
 Route::apiResource('/project',ProjectController::class)->middleware('auth:sanctum');
 Route::apiResource('/client',ClientController::class)->middleware('auth:sanctum');
 Route::get('/getuser',[UserController::class,'getCurrentUser'])->middleware('auth:sanctum');
